@@ -2,8 +2,7 @@
 
 The main contributor Dana K. Bikturganova, student of SPbPU ICSC. 
 The contributor E.S. Bulykina, students, SPbPU ICSC.
-The advisor and contributor Vladimir A. Parkhomenko., Seniour Lecturer of SPbPU ICSC.
-The academic advisor Alexander V. Shchukin, PhD, Associate Professor, SPbPU ICSC.
+The advisor Alexander V. Shchukin, PhD, Associate Professor, SPbPU ICSC.
 
 **Vision Simulator** is a Chromium-based browser extension (Manifest V3) that combines:
 
@@ -27,4 +26,16 @@ The academic advisor Alexander V. Shchukin, PhD, Associate Professor, SPbPU ICSC
 
 The plugin operates entirely client-side, requires no backend, and provides instant visual feedback.
 
+## Instruction
 
+### Installation
+1. Clone the repository
+2. Open Chrome/Edge and navigate to `chrome://extensions/`
+3. Enable **Developer mode** (toggle in the top-right corner)
+4. Click **Load unpacked**
+5. Select the project folder containing `manifest.json`
+
+### Usage
+- Click the extension icon → choose simulation mode or run accessibility audit
+- Works offline, client-side only, compatible with all Chromium-based browsers
+- Open `test-page.html` to test the plugin on a page with known accessibility defects
