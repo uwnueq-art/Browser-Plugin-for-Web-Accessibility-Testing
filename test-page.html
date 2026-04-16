@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Тестовая страница — Vision Simulator</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; background: #fff; }
+  h1 { text-align: center; }
+  .info { text-align: center; color: #666; margin-bottom: 30px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 800px; margin: 0 auto; }
+  .patch {
+    height: 120px; border-radius: 8px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; color: #fff; font-weight: bold;
+    font-size: 14px; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .patch span { font-size: 11px; opacity: 0.9; margin-top: 4px; }
+  .test-section { margin-top: 40px; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .test-section h2 { border-bottom: 2px solid #eee; padding-bottom: 8px; }
+  .btn-row { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+  .btn-row a {
+    padding: 10px 24px; background: #EF4444; color: #fff; text-decoration: none;
+    border-radius: 6px; font-weight: bold; font-size: 14px;
+  }
+  .btn-row a.green { background: #22C55E; }
+  .btn-row a.blue { background: #3B82F6; }
+  .btn-row a.orange { background: #F97316; }
+  .link-test a { color: #2563EB; margin-right: 15px; }
+  .link-test a.no-underline { text-decoration: none; }
+  table { border-collapse: collapse; width: 100%; margin-top: 15px; }
+  td, th { border: 1px solid #ddd; padding: 8px; text-align: center; }
+  th { background: #f5f5f5; }
+  .small-text { font-size: 10px; color: #999; }
+  .contrast-demo { display: flex; gap: 15px; margin: 15px 0; }
+  .contrast-box { padding: 15px 20px; border-radius: 6px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<h1>Тестовая страница — Vision Simulator</h1>
+
+<!-- СЕКЦИЯ 1: Цветовые блоки для проверки матриц -->
+<div class="test-section">
+  <h2>1. Эталонные цвета</h2>
+  <p>Каждый блок — чистый цвет. После применения фильтра цвет должен измениться предсказуемо.</p>
+</div>
+
+<div class="grid">
+  <div class="patch" style="background:#FF0000">Красный<span>#FF0000</span></div>
+  <div class="patch" style="background:#00FF00">Зелёный<span>#00FF00</span></div>
+  <div class="patch" style="background:#0000FF">Синий<span>#0000FF</span></div>
+  <div class="patch" style="background:#FFFF00; color:#333; text-shadow:none;">Жёлтый<span>#FFFF00</span></div>
+  <div class="patch" style="background:#FF8800">Оранжевый<span>#FF8800</span></div>
+  <div class="patch" style="background:#8800FF">Фиолетовый<span>#8800FF</span></div>
+  <div class="patch" style="background:#00FFFF; color:#333; text-shadow:none;">Голубой<span>#00FFFF</span></div>
+  <div class="patch" style="background:#FF00FF">Розовый<span>#FF00FF</span></div>
+</div>
+
+<!-- СЕКЦИЯ 2: Интерфейсные элементы -->
+<div class="test-section">
+  <h2>2. Интерфейсные элементы</h2>
+  <p>Кнопки разных цветов — проверка различимости при дальтонизме:</p>
+  <div class="btn-row">
+    <a href="#">Отменить</a>
+    <a href="#" class="green">Подтвердить</a>
+    <a href="#" class="blue">Подробнее</a>
+    <a href="#" class="orange">Внимание</a>
+  </div>
+  <p>При протанопии красная кнопка «Отменить» должна стать неотличимой от зелёной «Подтвердить».</p>
+</div>
+
+<!-- СЕКЦИЯ 3: Контрастность -->
+<div class="test-section">
+  <h2>3. Примеры контрастности</h2>
+  <div class="contrast-demo">
+    <div class="contrast-box" style="background:#fff; color:#777; border:1px solid #eee;">Серый на белом<br><span class="small-text">CR = 4.49 (не проходит)</span></div>
+    <div class="contrast-box" style="background:#fff; color:#333; border:1px solid #eee;">Тёмный на белом<br><span class="small-text">CR = 12.63 (проходит)</span></div>
+    <div class="contrast-box" style="background:#1a1a2e; color:#e0e0e0;">Светлый на тёмном<br><span class="small-text">CR = 13.28 (проходит)</span></div>
+    <div class="contrast-box" style="background:#fff; color:#aaa; border:1px solid #eee;">Светло-серый<br><span class="small-text">CR = 2.32 (не проходит)</span></div>
+  </div>
+</div>
+
+<!-- СЕКЦИЯ 4: Ссылки -->
+<div class="test-section">
+  <h2>4. Различимость ссылок</h2>
+  <p class="link-test">
+    <a href="#">Ссылка с подчёркиванием</a>
+    <a href="#" class="no-underline">Ссылка без подчёркивания</a>
+    Обычный текст рядом со ссылкой
+  </p>
+</div>
+
+<!-- СЕКЦИЯ 5: Изображения -->
+<div class="test-section">
+  <h2>5. Изображения</h2>
+  <p>Первая картинка с alt, вторая без:</p>
+  <img src="https://via.placeholder.com/150x80/EF4444/FFFFFF?text=С+alt" alt="Тестовое изображение с alt-текстом" style="margin-right:15px;">
+  <img src="https://via.placeholder.com/150x80/22C55E/FFFFFF?text=Без+alt" style="margin-right:15px;">
+</div>
+
+<!-- СЕКЦИЯ 6: Таблица ожидаемых результатов -->
+<div class="test-section">
+  <h2>6. Ожидаемые цвета после трансформации</h2>
+  <p>Рассчитано по матрицам Machado [4]:</p>
+  <table>
+    <tr>
+      <th>Исходный цвет</th>
+      <th>Протанопия</th>
+      <th>Дейтеранопия</th>
+      <th>Тританопия</th>
+      <th>Ахроматопсия</th>
+    </tr>
+    <tr>
+      <td style="background:#FF0000;color:#fff">#FF0000</td>
+      <td style="background:#270D00;color:#fff">#270D00</td>
+      <td style="background:#5E4700;color:#fff">#5E4700</td>
+      <td style="background:#FF0C01;color:#fff">#FF0C01</td>
+      <td style="background:#363636;color:#fff">#363636</td>
+    </tr>
+    <tr>
+      <td style="background:#00FF00;color:#fff">#00FF00</td>
+      <td style="background:#FFB500;color:#333">#FFB500</td>
+      <td style="background:#DBAC00;color:#333">#DBAC00</td>
+      <td style="background:#E9ED25;color:#333">#E9ED25</td>
+      <td style="background:#B6B6B6;color:#333">#B6B6B6</td>
+    </tr>
+    <tr>
+      <td style="background:#0000FF;color:#fff">#0000FF</td>
+      <td style="background:#0000FF;color:#fff">#0000FF</td>
+      <td style="background:#0000F8;color:#fff">#0000F8</td>
+      <td style="background:#002D4D;color:#fff">#002D4D</td>
+      <td style="background:#121212;color:#fff">#121212</td>
+    </tr>
+  </table>
+  <p class="small-text">Значения округлены. Допустимое отклонение ±5 единиц по каждому каналу.</p>
+</div>
+
+</body>
+</html>
