@@ -2,11 +2,11 @@
 
 The main contributor Dana K. Bikturganova, student of SPbPU ICSC. 
 The contributor E.S. Bulykina, students, SPbPU ICSC.
-The advisor Alexander V. Shchukin, PhD, Associate Professor, SPbPU ICSC.
+The advisor Alexander V. Shchukin, PhD, docent, SPbPU ICSC.
 
 **Vision Simulator** is a Chromium-based browser extension (Manifest V3) that combines:
 
-1. **Real-time simulation** of four types of color vision deficiencies (protanopia, deuteranopia, tritanopia, achromatopsia) using the physiological Machado model [4] via SVG `feColorMatrix` filters.
+1. **Real-time simulation** of four types of color vision deficiencies (protanopia, deuteranopia, tritanopia, achromatopsia) using the physiological Machado model via SVG `feColorMatrix` filters.
 2. **Automated accessibility audit** of web interfaces against 7 criteria from GOST R 52872-2019 and WCAG 2.1:
 
    - Text contrast ≥ 4.5:1 (SC 1.4.3)
