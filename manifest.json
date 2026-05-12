@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Vision Simulator",
-  "version": "7.0",
+  "version": "1.0",
   "description": "Симуляция дальтонизма и проверка доступности по ГОСТ Р 52872-2019 / WCAG 2.1",
   "permissions": ["activeTab", "scripting"],
   "action": {
