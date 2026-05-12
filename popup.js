@@ -1,5 +1,4 @@
-// popup.js — Две функции: симуляция дальтонизма + проверка доступности.
-
+// Переключение вкладок
 var tabs = document.querySelectorAll('.tab');
 tabs.forEach(function(tab) {
   tab.addEventListener('click', function() {
@@ -10,7 +9,6 @@ tabs.forEach(function(tab) {
   });
 });
 
-// === Симуляция дальтонизма ===
 var pills = document.querySelectorAll('.pill');
 var resetBtn = document.getElementById('resetBtn');
 var statusDot = document.getElementById('statusDot');
@@ -19,8 +17,9 @@ var names = {
   protanopia: 'Протанопия', deuteranopia: 'Дейтеранопия',
   tritanopia: 'Тританопия', achromatopsia: 'Ахроматопсия'
 };
-var active = {};
+var activeMode = null;
 
+// Внедряет content.js в текущую вкладку, затем выполняет callback
 function ensureScript(tabId, cb) {
   chrome.scripting.executeScript(
     { target: { tabId: tabId }, files: ['content.js'] },
@@ -28,6 +27,7 @@ function ensureScript(tabId, cb) {
   );
 }
 
+// Отправляет сообщение в content.js активной вкладки
 function safeSend(msg, cb) {
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     if (!tabs[0]) return;
@@ -43,50 +43,53 @@ function safeSend(msg, cb) {
 pills.forEach(function(pill) {
   pill.addEventListener('click', function() {
     var mode = pill.getAttribute('data-mode');
-    if (active[mode]) { delete active[mode]; pill.classList.remove('active'); }
-    else { active[mode] = true; pill.classList.add('active'); }
+    if (activeMode === mode) {
+      activeMode = null;
+      pill.classList.remove('active');
+    } else {
+      pills.forEach(function(p) { p.classList.remove('active'); });
+      activeMode = mode;
+      pill.classList.add('active');
+    }
     updateStatus();
-    safeSend({ action: 'setModes', modes: Object.keys(active) });
+    safeSend({ action: 'setMode', mode: activeMode });
   });
 });
 
 resetBtn.addEventListener('click', function() {
-  active = {};
+  activeMode = null;
   pills.forEach(function(p) { p.classList.remove('active'); });
   updateStatus();
-  safeSend({ action: 'setModes', modes: [] });
+  safeSend({ action: 'setMode', mode: null });
 });
 
 function updateStatus() {
-  var keys = Object.keys(active);
-  if (keys.length === 0) {
+  if (!activeMode) {
     statusDot.classList.remove('on');
     statusText.textContent = 'Фильтр не активен';
   } else {
     statusDot.classList.add('on');
-    statusText.textContent = keys.map(function(k) { return names[k]; }).join(', ');
+    statusText.textContent = names[activeMode];
   }
 }
 
-// Восстановление состояния при открытии popup
+// Восстановление активного фильтра при открытии popup
 chrome.tabs.query({ active: true, currentWindow: true }, function(t) {
   if (!t[0]) return;
   ensureScript(t[0].id, function() {
     chrome.tabs.sendMessage(t[0].id, { action: 'getState' }, function(r) {
       if (chrome.runtime.lastError) return;
-      if (r && r.modes && r.modes.length > 0) {
-        r.modes.forEach(function(m) {
-          active[m] = true;
-          var el = document.querySelector('[data-mode="' + m + '"]');
-          if (el) el.classList.add('active');
-        });
+      if (r && r.mode) {
+        activeMode = r.mode;
+        var el = document.querySelector('[data-mode="' + r.mode + '"]');
+        if (el) el.classList.add('active');
         updateStatus();
       }
     });
   });
 });
 
-// === Проверка доступности ===
+// Аудит доступности
 var auditBtn = document.getElementById('auditBtn');
 var auditResults = document.getElementById('auditResults');
 
